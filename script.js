@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name         Discord UID Extractor
+// @name         Discord UID Extractor(,ver)
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      1.0
 // @description  Extract UIDs from Discord avatars and display them
 // @author       Your Name
 // @match        https://discord.com/*
 // @grant        none
 // @license      You can modify as long as you credit me
+ 
 // ==/UserScript==
  
 (function() {
@@ -125,7 +126,7 @@
     addResizeButtons(container, initialWidth, initialHeight);
  
     const title = document.createElement('h2');
-    title.textContent = 'Extracted UIDs';
+    title.textContent = 'Extracted UIDs(,)ver';
     title.style.margin = '0 0 5px 0';
     title.style.fontSize = '12px';
     container.appendChild(title);
@@ -202,13 +203,14 @@
         });
     }
  
-    function copyUIDsToClipboard() {
-        const uids = Array.from(uidList.children).map(li => li.textContent).join('\n');
-        navigator.clipboard.writeText(uids).then(() => {
-        }).catch(err => {
-            console.error('Failed to copy UIDs: ', err);
-        });
-    }
+   function copyUIDsToClipboard() {
+    const uids = Array.from(uidList.children).map(li => li.textContent).join(',');
+    navigator.clipboard.writeText(uids).then(() => {
+    }).catch(err => {
+        console.error('Failed to copy UIDs: ', err);
+    });
+}
+ 
  
     startButton.addEventListener('click', () => {
         updateUIDList();
