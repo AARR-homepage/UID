@@ -109,7 +109,7 @@
     }
 
     const initialWidth = '150px';
-    const initialHeight = '30px';
+    const initialHeight = '65px';
 
     const container = document.createElement('div');
     container.id = 'uidContainer';
