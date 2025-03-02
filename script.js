@@ -108,22 +108,21 @@
         });
     }
 
-    const initialWidth = '150px';
-    const initialHeight = '65px';
+    const initialWidth = '170px';
+    const initialHeight = '320px';
 
     const container = document.createElement('div');
     container.id = 'uidContainer';
     container.style.position = 'fixed';
     container.style.top = '120px';
     container.style.left = '80px';
-    container.style.backgroundColor = '#2f3136';
+    container.style.backgroundColor = '#000000';
     container.style.color = '#ffffff';
     container.style.padding = '5px';
     container.style.borderRadius = '5px';
     container.style.zIndex = '1000';
     container.style.width = initialWidth;
     container.style.height = initialHeight;
-    container.style.overflowY = 'scroll';
     container.style.display = 'none';
     document.body.appendChild(container);
 
@@ -131,15 +130,39 @@
     addResizeButtons(container, initialWidth, initialHeight);
 
     const title = document.createElement('h2');
-    title.textContent = 'Extracted UIDs';
+    title.textContent = 'AARR Extracted UIDs';
     title.style.margin = '0 0 5px 0';
-    title.style.fontSize = '12px';
+    title.style.fontSize = '15px';
     container.appendChild(title);
+
+    const toolsLink = document.createElement('a');
+    toolsLink.href = 'https://aarr-homepage.github.io/page/about5.html';
+    toolsLink.target = '_blank';
+    toolsLink.style.color = '#00BFFF';
+    toolsLink.style.textDecoration = 'underline';
+    toolsLink.style.display = 'block';
+    toolsLink.style.marginBottom = '10px';
+    toolsLink.style.fontSize = '12px';
+    toolsLink.textContent = 'other tools';
+    container.appendChild(toolsLink);
+
+    const sourceLink = document.createElement('a');
+    sourceLink.href = 'https://greasyfork.org/ja/scripts/518295-discord-uid-extractor/code';
+    sourceLink.target = '_blank';
+    sourceLink.style.color = '#00BFFF';
+    sourceLink.style.textDecoration = 'underline';
+    sourceLink.style.display = 'block';
+    sourceLink.style.marginBottom = '10px';
+    sourceLink.style.fontSize = '12px';
+    sourceLink.textContent = 'source code';
+    container.appendChild(sourceLink);
 
     const uidList = document.createElement('ul');
     uidList.style.listStyleType = 'none';
     uidList.style.padding = '0';
     uidList.style.fontSize = '10px';
+    uidList.style.height = 'calc(100% - 120px)';
+    uidList.style.overflowY = 'scroll';
     container.appendChild(uidList);
 
     const startButton = document.createElement('button');
