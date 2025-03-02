@@ -114,8 +114,8 @@
     const container = document.createElement('div');
     container.id = 'uidContainer';
     container.style.position = 'fixed';
-    container.style.top = '35px';
-    container.style.left = '730px';
+    container.style.top = '120px';
+    container.style.left = '80px';
     container.style.backgroundColor = '#2f3136';
     container.style.color = '#ffffff';
     container.style.padding = '5px';
@@ -326,8 +326,8 @@
     const toggleImage = document.createElement('img');
     toggleImage.src = 'https://i.imgur.com/fS8jqh3.png';
     toggleImage.style.position = 'fixed';
-    toggleImage.style.top = '10px';
-    toggleImage.style.left = '780px';
+    toggleImage.style.top = '770px';
+    toggleImage.style.left = '75px';
     toggleImage.style.width = '30px';
     toggleImage.style.height = '30px';
     toggleImage.style.cursor = 'pointer';
