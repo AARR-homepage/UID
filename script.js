@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Discord UID Extractor
 // @namespace    http://tampermonkey.net/
-// @version      2.5
+// @version      2.7
 // @description  Extract UIDs from Discord avatars and display them
 // @author       Your Name
-// @match        https://discord.com/*
+// @match        https://discord.com/channels*
 // @grant        none
 // @license      You can modify as long as you credit me
 // @downloadURL  https://update.greasyfork.org/scripts/518295/Discord%20UID%20Extractor.user.js
@@ -15,6 +15,7 @@
     'use strict';
 
     let observer;
+    let isBoxVisible = false;
 
     function makeElementDraggable(el) {
         el.onmousedown = function(event) {
@@ -113,8 +114,8 @@
     const container = document.createElement('div');
     container.id = 'uidContainer';
     container.style.position = 'fixed';
-    container.style.top = '5px';
-    container.style.left = '5px';
+    container.style.top = '35px';
+    container.style.left = '730px';
     container.style.backgroundColor = '#2f3136';
     container.style.color = '#ffffff';
     container.style.padding = '5px';
@@ -123,6 +124,7 @@
     container.style.width = initialWidth;
     container.style.height = initialHeight;
     container.style.overflowY = 'scroll';
+    container.style.display = 'none';
     document.body.appendChild(container);
 
     makeElementDraggable(container);
@@ -264,7 +266,7 @@
             if (!Array.from(uidList.children).some(li => li.textContent === uid)) {
                 const listItem = document.createElement('li');
                 listItem.textContent = uid;
-                listItem.style.color = 'green'; // Set the UID color to green
+                listItem.style.color = 'green';
                 uidList.appendChild(listItem);
             }
         });
@@ -319,4 +321,21 @@
     copyButton.addEventListener('click', copyUIDsToClipboard);
     resetButton.addEventListener('click', resetUIDList);
     saveButton.addEventListener('click', saveUIDsToFile);
+
+
+    const toggleImage = document.createElement('img');
+    toggleImage.src = 'https://i.imgur.com/fS8jqh3.png';
+    toggleImage.style.position = 'fixed';
+    toggleImage.style.top = '10px';
+    toggleImage.style.left = '780px';
+    toggleImage.style.width = '30px';
+    toggleImage.style.height = '30px';
+    toggleImage.style.cursor = 'pointer';
+    toggleImage.style.zIndex = '1001';
+    document.body.appendChild(toggleImage);
+
+    toggleImage.addEventListener('click', () => {
+        isBoxVisible = !isBoxVisible;
+        container.style.display = isBoxVisible ? 'block' : 'none';
+    });
 })();
