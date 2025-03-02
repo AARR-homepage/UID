@@ -4,7 +4,7 @@
 // @version      2.7
 // @description  Extract UIDs from Discord avatars and display them
 // @author       Your Name
-// @match        https://discord.com/channels*
+// @match        https://discord.com/*
 // @grant        none
 // @license      You can modify as long as you credit me
 // @downloadURL  https://update.greasyfork.org/scripts/518295/Discord%20UID%20Extractor.user.js
