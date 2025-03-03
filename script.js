@@ -1,53 +1,51 @@
 // ==UserScript==
 // @name         Discord UID Extractor
 // @namespace    http://tampermonkey.net/
-// @version      2.7
+// @version      2.3
 // @description  Extract UIDs from Discord avatars and display them
-// @author       Your Name
+// @author       AARR
 // @match        https://discord.com/*
 // @grant        none
 // @license      You can modify as long as you credit me
-// @downloadURL  https://update.greasyfork.org/scripts/518295/Discord%20UID%20Extractor.user.js
-// @updateURL    https://update.greasyfork.org/scripts/518295/Discord%20UID%20Extractor.meta.js
 // ==/UserScript==
-
+ 
 (function() {
     'use strict';
-
+ 
     let observer;
     let isBoxVisible = false;
-
+ 
     function makeElementDraggable(el) {
         el.onmousedown = function(event) {
             event.preventDefault();
-
+ 
             let shiftX = event.clientX - el.getBoundingClientRect().left;
             let shiftY = event.clientY - el.getBoundingClientRect().top;
-
+ 
             function moveAt(pageX, pageY) {
                 el.style.left = Math.min(Math.max(0, pageX - shiftX), window.innerWidth - el.offsetWidth) + 'px';
                 el.style.top = Math.min(Math.max(0, pageY - shiftY), window.innerHeight - el.offsetHeight) + 'px';
             }
-
+ 
             function onMouseMove(event) {
                 moveAt(event.pageX, event.pageY);
             }
-
+ 
             document.addEventListener('mousemove', onMouseMove);
-
+ 
             function onMouseUp() {
                 document.removeEventListener('mousemove', onMouseMove);
                 document.removeEventListener('mouseup', onMouseUp);
             }
-
+ 
             document.addEventListener('mouseup', onMouseUp);
         };
-
+ 
         el.ondragstart = function() {
             return false;
         };
     }
-
+ 
     function addResizeButtons(el, initialWidth, initialHeight) {
         const buttonContainer = document.createElement('div');
         buttonContainer.style.position = 'absolute';
@@ -57,7 +55,7 @@
         buttonContainer.style.flexDirection = 'column';
         buttonContainer.style.gap = '5px';
         el.appendChild(buttonContainer);
-
+ 
         const enlargeButton = document.createElement('button');
         enlargeButton.textContent = '＋';
         enlargeButton.style.padding = '2px 5px';
@@ -77,7 +75,7 @@
             enlargeButton.style.color = '#ffffff';
         };
         buttonContainer.appendChild(enlargeButton);
-
+ 
         const shrinkButton = document.createElement('button');
         shrinkButton.textContent = '－';
         shrinkButton.style.padding = '2px 5px';
@@ -97,20 +95,20 @@
             shrinkButton.style.color = '#ffffff';
         };
         buttonContainer.appendChild(shrinkButton);
-
+ 
         enlargeButton.addEventListener('click', () => {
             el.style.height = (el.clientHeight + 150) + 'px';
         });
-
+ 
         shrinkButton.addEventListener('click', () => {
             el.style.width = initialWidth;
             el.style.height = initialHeight;
         });
     }
-
+ 
     const initialWidth = '170px';
     const initialHeight = '320px';
-
+ 
     const container = document.createElement('div');
     container.id = 'uidContainer';
     container.style.position = 'fixed';
@@ -125,38 +123,27 @@
     container.style.height = initialHeight;
     container.style.display = 'none';
     document.body.appendChild(container);
-
+ 
     makeElementDraggable(container);
     addResizeButtons(container, initialWidth, initialHeight);
-
+ 
     const title = document.createElement('h2');
     title.textContent = 'AARR Extracted UIDs';
     title.style.margin = '0 0 5px 0';
     title.style.fontSize = '15px';
     container.appendChild(title);
-
+ 
     const toolsLink = document.createElement('a');
     toolsLink.href = 'https://aarr-homepage.github.io/page/about5.html';
     toolsLink.target = '_blank';
     toolsLink.style.color = '#00BFFF';
     toolsLink.style.textDecoration = 'underline';
-    toolsLink.style.display = 'block';
+    toolsLink.style.display = 'inline-block';
     toolsLink.style.marginBottom = '10px';
     toolsLink.style.fontSize = '12px';
-    toolsLink.textContent = 'other tools';
+    toolsLink.textContent = '🔗other tools';
     container.appendChild(toolsLink);
-
-    const sourceLink = document.createElement('a');
-    sourceLink.href = 'https://greasyfork.org/ja/scripts/518295-discord-uid-extractor/code';
-    sourceLink.target = '_blank';
-    sourceLink.style.color = '#00BFFF';
-    sourceLink.style.textDecoration = 'underline';
-    sourceLink.style.display = 'block';
-    sourceLink.style.marginBottom = '10px';
-    sourceLink.style.fontSize = '12px';
-    sourceLink.textContent = 'source code';
-    container.appendChild(sourceLink);
-
+ 
     const uidList = document.createElement('ul');
     uidList.style.listStyleType = 'none';
     uidList.style.padding = '0';
@@ -164,7 +151,7 @@
     uidList.style.height = 'calc(100% - 120px)';
     uidList.style.overflowY = 'scroll';
     container.appendChild(uidList);
-
+ 
     const startButton = document.createElement('button');
     startButton.textContent = ' Start ';
     startButton.style.marginTop = '5px';
@@ -185,7 +172,7 @@
         startButton.style.color = '#ffffff';
     };
     container.appendChild(startButton);
-
+ 
     const stopButton = document.createElement('button');
     stopButton.textContent = ' Stop ';
     stopButton.style.marginTop = '5px';
@@ -206,7 +193,7 @@
         stopButton.style.color = '#ffffff';
     };
     container.appendChild(stopButton);
-
+ 
     const resetButton = document.createElement('button');
     resetButton.textContent = 'Reset';
     resetButton.style.marginTop = '5px';
@@ -227,7 +214,7 @@
         resetButton.style.color = '#ffffff';
     };
     container.appendChild(resetButton);
-
+ 
     const copyButton = document.createElement('button');
     copyButton.textContent = 'Copy UIDs';
     copyButton.style.marginTop = '5px';
@@ -248,7 +235,7 @@
         copyButton.style.color = '#ffffff';
     };
     container.appendChild(copyButton);
-
+ 
     const saveButton = document.createElement('button');
     saveButton.textContent = 'Save File';
     saveButton.style.marginTop = '5px';
@@ -269,7 +256,7 @@
         saveButton.style.color = '#ffffff';
     };
     container.appendChild(saveButton);
-
+ 
     function extractUIDs() {
         const avatarElements = document.querySelectorAll('img[src*="cdn.discordapp.com/avatars/"]');
         const uids = new Set();
@@ -282,7 +269,7 @@
         });
         return Array.from(uids);
     }
-
+ 
     function updateUIDList() {
         const uids = extractUIDs();
         uids.forEach(uid => {
@@ -294,7 +281,7 @@
             }
         });
     }
-
+ 
     function copyUIDsToClipboard() {
         const uids = Array.from(uidList.children).map(li => li.textContent).join('\n');
         navigator.clipboard.writeText(uids).then(() => {
@@ -302,14 +289,14 @@
             console.error('Failed to copy UIDs: ', err);
         });
     }
-
+ 
     function resetUIDList() {
         uidList.innerHTML = '';
         if (observer) {
             observer.disconnect();
         }
     }
-
+ 
     function saveUIDsToFile() {
         const uids = Array.from(uidList.children).map(li => li.textContent).join('\n');
         const blob = new Blob([uids], { type: 'text/plain' });
@@ -322,7 +309,7 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-
+ 
     startButton.addEventListener('click', () => {
         if (observer) {
             observer.disconnect();
@@ -333,30 +320,35 @@
         });
         observer.observe(document.body, { childList: true, subtree: true });
     });
-
+ 
     stopButton.addEventListener('click', () => {
         if (observer) {
             observer.disconnect();
             observer = null;
         }
     });
-
+ 
     copyButton.addEventListener('click', copyUIDsToClipboard);
     resetButton.addEventListener('click', resetUIDList);
     saveButton.addEventListener('click', saveUIDsToFile);
-
-
+ 
     const toggleImage = document.createElement('img');
     toggleImage.src = 'https://i.imgur.com/fS8jqh3.png';
     toggleImage.style.position = 'fixed';
-    toggleImage.style.top = '770px';
-    toggleImage.style.left = '75px';
     toggleImage.style.width = '30px';
     toggleImage.style.height = '30px';
     toggleImage.style.cursor = 'pointer';
     toggleImage.style.zIndex = '1001';
     document.body.appendChild(toggleImage);
-
+ 
+    function adjustToggleImagePosition() {
+        toggleImage.style.top = (window.innerHeight - 86) + 'px';
+        toggleImage.style.left = (window.innerWidth - 1016) + 'px'; 
+    }
+ 
+    window.addEventListener('resize', adjustToggleImagePosition);
+    adjustToggleImagePosition();
+ 
     toggleImage.addEventListener('click', () => {
         isBoxVisible = !isBoxVisible;
         container.style.display = isBoxVisible ? 'block' : 'none';
